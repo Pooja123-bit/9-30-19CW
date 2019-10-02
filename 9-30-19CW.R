@@ -158,8 +158,5 @@ s.wide<-dcast(data=s, value.var="HR",formula="lgID"~"teamID",
               fun.aggregate=mean)
                          
                          
-                         
-                         
-                         
 
                            
