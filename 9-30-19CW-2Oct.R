@@ -156,7 +156,79 @@ library(reshape2)
 #use the "cast" function to change data frame from the long to wide format
 s.wide<-dcast(data=s, value.var="HR",formula="lgID"~"teamID",
               fun.aggregate=mean)
-                         
-                         
+
+7-10-19 CW
+
+fs<- f[,c("transect.id","area_fac","depth_fac","parcel.id",
+          "parcel.density.m3","parcel.length.m")]
+
+#how to rename a field or column
+library(tidyverse)
+fs<-rename(.data=fs,tid=transect.id)
+fs<-rename(.data=fs,area=area_fac)
+fs<-rename(.data=fs,depth=depth_fac)
+fs<-rename(.data=fs,pid=parcel.id)
+fs<-rename(.data=fs,pl=parcel.length.m)
+fs<-rename(.data=fs,pd=parcel.density.m3)
+
+#another way to rename column
+names(fs)[1]=c("transect")
+names(fs)[1:3]=c("transect","a","z")
+
+#Reshaping your data
+library(reshape2)
+#using the function 'melt'(reshape2) to change your
+#data frame from wide to long format
+fs.melt<-melt(data=fs,id.vars=c("transect","pid","area","depth"),
+measure.vars=c("pl","pd"),value.name=c("numbers"))
+
+OR
+
+fs.m<-melt(data=fs,id.vars=c("transect","pid","area","depth"),
+              measure.vars=c("pl","pd"),value.name=c("numbers"))
+
+fs.m$variable<-as.character(fs.m$variable)
+str(fs.m)
+
+#using dcast function to transfer your data from long 
+#to the wide format
+fs.cast<-dcast(data=fs.melt,formula=transect~variable,
+               value.var=c("numbers"),fun.aggregate=mean)
+
+#Spread and gather (tidyverse)
+fs.gather=fs%~%group_by(tid,area,depth,pid)%~%
+                        gather(key='variable',value=)
+
+#Removing Duplicates
+o1<-fs[1,]
+o2<-fs[1,]
+o3<-fs[1,]
+o4<-fs[2:10,]
+
+#bind these individual objects back together using function"rbind"
+o<-rbind(o1,o2,o3,o4)
+#now the first three rows are duplicate observations
+no.dups<-o[!duplicated(o),]
+dups<-o[duplicated(o),]
+
+complete.cases
+
+fs.complete<-fs[complete.cases(fs),]
+
+#Sorting data
+
+
+#Sort by mpg
+nd<-mtcars[order(mpg),]
+
+#using the arrange function
+nd.arrange<-arrange(.data=mt.cars.mpg)
+
+nd.arrange.desc<-arrange(.data=mtcars,desc(mpg)) #ascending
+
+nd.m.c<-arrange(.data=mtcars,mpg,cy1) #ascending
+
+nd.m.c<-arrange(.data=mtcars,mpg,desc(cyl)) #mpg ascending;cyl descending
+
 
                            
