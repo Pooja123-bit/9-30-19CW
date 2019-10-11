@@ -230,5 +230,9 @@ nd.m.c<-arrange(.data=mtcars,mpg,cy1) #ascending
 
 nd.m.c<-arrange(.data=mtcars,mpg,desc(cyl)) #mpg ascending;cyl descending
 
+#Another way to summarize
+AP=aggregate(x=f$parcel.density.m3, by = list(f$transect.id), FUN = sum)
+AP
+
 
                            
