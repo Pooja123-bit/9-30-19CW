@@ -97,7 +97,8 @@ head(al.hits)
 bats<-tapply(X=d$HR, INDEX=list(d$lgID,d$bats), FUN=mean)
 
 #Three category summarize(crazy array)
-bats.team<-tapply(X=d$HR, INDEX=list(d$lgID,d$bats), FUN=mean)
+bats.team<-tapply(X=d$HR, INDEX=list(d$lgID,d$bats,d$teamID), FUN=mean)
+bats.team
 
 #aggregate----
 team.stats.sum<-aggregate(x=d[,c("AB","H","BB","2B","HR")], by=list(d$teamID,FUN=sum)
